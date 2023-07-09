@@ -1,24 +1,38 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  /* state ile yapılacaklar listesini tutacağız. */
+  const [text, setText] = useState('');
+  console.log(text);
+  /* yazılanları tutmak için state oluşturuyoruz. */
+  const[messages, setMessages]=useState([]);
+  /* değişiklikleri yakalayıp state'i güncelleyecek fonksiyonu yazıyoruz. */
+const onChangeFunc=(e)=>{
+ /*  değeri alıp state'i güncelliyoruz. */
+setText(e.target.value);
+}
+const onClickMessages=()=>{
+  /*  mesajları tutan state'e yeni mesajı ekliyoruz. */
+  /* ...messages ile önceki mesajları alıyoruz.  */
+  setMessages([...messages,text]);
+  /*  input alanını temizliyoruz. */
+  setText('');
+}
+console.log(messages);
   return (
+    <>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <input value={text} onChange={onChangeFunc} type="text" placeholder="Add a todo" />
+      <button onClick={onClickMessages}> Add </button>
+      {
+        messages.map((message,index)=>(
+         <h1 key={index}>{message}</h1>
+  ))
+      }
     </div>
+    </>
   );
 }
 
